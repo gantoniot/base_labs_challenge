@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { FindAllUserDto } from './dto/find-all-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -12,9 +13,9 @@ export class UserController {
     return this.userService.create(createUserDto);
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
+  @Post("/search")
+  findAll(@Body() findAllUserDto: FindAllUserDto) {
+    return this.userService.findAll(findAllUserDto);
   }
 
   @Get(':id')

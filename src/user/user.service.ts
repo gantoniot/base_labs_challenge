@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { FindAllUserDto } from './dto/find-all-user.dto';
 
 @Injectable()
 export class UserService {
@@ -18,7 +19,8 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  findAll() {
+  findAll(findAllUserDto: FindAllUserDto) {
+    this.userRepository.find
     return `This action returns all user`;
   }
 

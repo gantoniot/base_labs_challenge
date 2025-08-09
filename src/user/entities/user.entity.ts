@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Task } from "src/task/entities/task.entity";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -13,4 +14,7 @@ export class User {
 
     @Column({ type: 'bool' })
     isAdmin: boolean;
+
+    @ManyToMany(() => Task, (task) => task.assignees)
+    tasks: Task[];
 }

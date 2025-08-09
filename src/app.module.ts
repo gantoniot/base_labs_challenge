@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
+import { TaskModule } from './task/task.module';
+import { Task } from './task/entities/task.entity';
 
 @Module({
   imports: [
@@ -17,12 +19,13 @@ import { User } from './user/entities/user.entity';
       port: 5432,
       password: process.env.DB_PASSWORD,
       username: process.env.DB_USER,
-      entities: [User],
+      entities: [User, Task],
       database: process.env.DB_NAME,
       synchronize: true,
       logging: true,
     }),
-    UserModule],
+    UserModule,
+    TaskModule],
   controllers: [AppController],
   providers: [AppService],
 })
