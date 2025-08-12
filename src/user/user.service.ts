@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Like, Repository } from 'typeorm';
 import { FindAllUserDto } from './dto/find-all-user.dto';
 
 @Injectable()
@@ -19,9 +19,23 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  findAll(findAllUserDto: FindAllUserDto) {
-    this.userRepository.find
-    return `This action returns all user`;
+  async findAll(findAllUserDto: FindAllUserDto) {
+
+    let whereData: FindOptionsWhere<User> = {}
+    if(findAllUserDto.name)
+      whereData.name = Like(`%${findAllUserDto.name}%`);
+    if(findAllUserDto.email)
+      whereData.email = Like(`%${findAllUserDto.email}%`);
+    if(findAllUserDto.isAdmin)
+      whereData.isAdmin = findAllUserDto.isAdmin;
+
+    const users = await this.userRepository.find({
+      select: ["name", "email", "isAdmin", "tasks"],
+      where: whereData,
+      relations: ["tasks"],
+    });
+
+    return users.map(user => ({...user, tasks: user.taskCount = user.tasks.length, tasksCost: user.tasks.reduce((accumulator, value) => {return accumulator + value.cost}, 0)}));
   }
 
   findOne(id: number) {

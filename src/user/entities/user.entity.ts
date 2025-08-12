@@ -17,4 +17,8 @@ export class User {
 
     @ManyToMany(() => Task, (task) => task.assignees)
     tasks: Task[];
+
+    taskCount: number;
+    
+    tasksCost: number;
 }

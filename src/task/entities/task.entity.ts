@@ -1,5 +1,5 @@
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, DeleteDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Task {
@@ -24,7 +24,10 @@ export class Task {
     @Column({ type: 'float' })
     cost: number;
 
-    @ManyToMany(() => User, (user) => user.id)
+    @ManyToMany(() => User, (user) => user.tasks)
     @JoinTable() // This side owns the relationship and manages the join table
     assignees: User[];
+
+    @DeleteDateColumn()
+    deletedAt?: Date;
 }

@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { TaskService } from './task.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { FindAllTaskDto } from './dto/find-all-task.dto';
 
 @Controller('task')
 export class TaskController {
@@ -12,9 +13,9 @@ export class TaskController {
     return this.taskService.create(createTaskDto);
   }
 
-  @Get()
-  findAll() {
-    return this.taskService.findAll();
+  @Post("/search")
+  findAll(@Body() findAllTaskDto: FindAllTaskDto) {
+    return this.taskService.findAll(findAllTaskDto);
   }
 
   @Get(':id')

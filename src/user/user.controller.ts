@@ -14,8 +14,8 @@ export class UserController {
   }
 
   @Post("/search")
-  findAll(@Body() findAllUserDto: FindAllUserDto) {
-    return this.userService.findAll(findAllUserDto);
+  async findAll(@Body() findAllUserDto: FindAllUserDto) {
+    return await this.userService.findAll(findAllUserDto);
   }
 
   @Get(':id')

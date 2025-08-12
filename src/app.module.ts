@@ -7,6 +7,7 @@ import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { TaskModule } from './task/task.module';
 import { Task } from './task/entities/task.entity';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { Task } from './task/entities/task.entity';
       logging: true,
     }),
     UserModule,
-    TaskModule],
+    TaskModule,
+    AnalyticsModule],
   controllers: [AppController],
   providers: [AppService],
 })
